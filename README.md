@@ -8,9 +8,10 @@ We can create Threads using two ways by extending the Thread class or by impleme
 2) Point 2 of Thread class also applies here.  
 
 ## Methods 
-#### &rarr; Runnable Interface has only one method run() and that is also not implemented coz it is interface. While Thread class has many methods.
-&rarr; Some common methods are run(), start(), currentThread(), isAlive(), getName(), setName(), isDaemon(), setDaemon(), getPriority(), setPriority().  
-   &rarr; Daemon threads are the background threads like Garbage Collector. If A is Daemon Thread of B means A will execute its task till end of B, If B ends then A also ends.
+&rarr; Runnable Interface has only one method run() and that is also not implemented coz it is interface. While Thread class has many methods.  
+&rarr; Some common methods of Thread class are are run(), start(), currentThread(), isAlive(), getName(), setName(), isDaemon(), setDaemon(), getPriority(), setPriority().  
+&rarr; Daemon threads are the background threads like Garbage Collector. If A is Daemon Thread of B means A will execute its task till end of B, If B ends then A also ends. Thread run hone ke baad daemon nhi bn skti, pehle hi banana padta hai that's why Main thread can never become a daemon thread, because sabse pehle vahi run hoti hai.  
+&rarr; So Thread class gives many methods, but Runnable interface don't. But Runnable Interface se agar thread banaoge toh aur interfaces ko bhi implement kr loge. But Thread class se banaoge toh ek hi class ko extend kr paaoge.
 
 #### Preventing Thread Execution Methods-:
 In Java, sleep, yield, and join are methods used for thread control and synchronization:
@@ -30,7 +31,7 @@ When a thread is interrupted using the interrupt() method, it sets a flag within
 
 #### Inter Thread Communication
 In Java, wait(), notify(), and notifyAll() are methods used for inter-thread communication and synchronization. They are typically used in scenarios where one thread needs to wait for a certain condition to be met before proceeding, and other threads may need to signal or notify when that condition is met. These methods are applicable only within synchronized blocks or methods, as they rely on intrinsic locks.  
-**Important thing to notice is that these methods are not present in Object class , not in Thread class**
+**Important thing to notice is that these methods are present in Object class , not in Thread class**
 1) wait(): The wait() method is used to make a thread wait until another thread invokes the notify() or notifyAll() method for the same object.
 When a thread calls wait(), it releases the lock it holds on the object and enters the waiting state until another thread notifies it.
 wait() can be called with or without a timeout. If a timeout is specified, the thread will wait for the specified time period or until it is notified, whichever comes first.
@@ -60,6 +61,19 @@ synchronized (obj) {
 }
 
 ```
+
+### Thread Safety
+When multiple threads work on same data , they can create inconsistent results.There are 4 ways to achieve thread safety-:  
+1. Using Synchronization-: Using synchronized method or synchronized block. But synchronization can create a deadlock.So we use atomic and volatile
+2. volatile keyword-:volatile keyword is used for variables only.If a variable is accessed by multiple thread, toh use volatile banado. JVM will create a separate local copy of this variable for every thread. Every thread will make change in its local copy only, SO another threads will not be affected.But it increases space complexity coz agar 100 threads hai toh 100 copies banegi variable ki.
+3. Atomic variable-: It is applicable for variables only. java.util.concurrent.atomic package has some methods, to make it thread safe
+
+
+### Concepts
+1. Whenever we use sleep , we need to handle the exception, because if any thread is sleeping and any another thread interrupts it then it will throw an exception.
+2. There is no direct way to stop a thread.
+![img](src/interrupt.jpg)
+
 
 
 
